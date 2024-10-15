@@ -53,6 +53,10 @@ class Quiz {
     averageDifficulty() {
         return this.questions.reduce((sumOfDifficulty, question) => {
             return sumOfDifficulty += question.difficulty;
+            // Using the index (i)
+            if (i === this.questions.length -1) {
+                return sumOfDifficulty / this.questions.length
+            }
         }, 0) /  this.questions.length;
     }
 }
