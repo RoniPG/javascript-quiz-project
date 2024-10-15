@@ -59,8 +59,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  TIMER  ************/
-
   let timer;
+  countDown();
+  function countDown() {
+    timer = setInterval(() => {
+      if (quiz.timeRemaining <= 0) {
+        showResults();
+      }
+      // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  
+      // Display the time remaining in the time remaining container
+      const timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      console.log(quiz.timeRemaining);
+      
+      quiz.timeRemaining -=1;    
+      
+    }, 1_000);
+  }
 
 
   /************  EVENT LISTENERS  ************/
@@ -191,6 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }  
 
   function showResults() {
+    
+    clearInterval(timer);
 
     // YOUR CODE HERE:
     //
@@ -210,11 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Show the quiz view (div#quizView)
     quizView.style.display = "block";
-
+    
     //Reset the quiz
+    quiz.timeRemaining = quizDuration;
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
     showQuestion();
+    countDown();
+
   }
 });
