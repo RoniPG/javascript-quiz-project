@@ -43,4 +43,16 @@ class Quiz {
     hasEnded() {
         return this.currentQuestionIndex === this.questions.length;
     }
+    filterQuestionsByDifficulty(difficulty) {
+        if (difficulty > 0  &&   difficulty < 4) {
+            return this.questions = this.questions.filter((question) => 
+                 question.difficulty === difficulty
+            );    
+        }
+    }
+    averageDifficulty() {
+        return this.questions.reduce((sumOfDifficulty, question) => {
+            return sumOfDifficulty += question.difficulty;
+        }, 0) /  this.questions.length;
+    }
 }
